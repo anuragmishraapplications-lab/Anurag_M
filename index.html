@@ -456,20 +456,75 @@ nav {
 .page-hero-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
 .page-hero-inner .section-heading { margin-bottom: 16px; }
 
-.projects-full { max-width: var(--max-w); margin: 0 auto; padding: 64px 32px; }
-.projects-full-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-.project-full-card {
+/* Projects page — layout */
+.proj-section { padding: 64px 0; }
+.proj-section-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
+.proj-featured-section { border-bottom: 1px solid var(--border); }
+
+/* Featured grid — 2 cols, first card spans full */
+.proj-featured-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.proj-featured-card:first-child { grid-column: 1 / -1; }
+.proj-featured-card-inner {
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 32px;
-  transition: box-shadow 0.2s;
+  height: 100%;
+  display: flex; flex-direction: column;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.proj-featured-card-inner:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.07); border-color: var(--border-dark); }
+
+/* Shared card elements */
+.proj-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 12px; }
+.proj-card-org-line { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); }
+.proj-card-year-pill { font-size: 11px; color: var(--text-light); border: 1px solid var(--border); border-radius: 100px; padding: 2px 10px; white-space: nowrap; flex-shrink: 0; }
+.proj-card-title { font-family: var(--serif); font-size: 21px; font-weight: 500; color: var(--text); margin-bottom: 10px; line-height: 1.35; }
+.proj-card-what { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 12px; }
+.proj-card-role { font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin-bottom: 10px; font-style: italic; }
+.proj-card-why { font-size: 13px; color: var(--accent-warm); line-height: 1.6; padding-top: 10px; margin-top: auto; border-top: 1px solid var(--border); }
+.proj-card-meta-line { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+.proj-card-meta-line strong { color: var(--text); }
+.proj-card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
+
+/* Featured first card title bump */
+.proj-featured-card:first-child .proj-card-title { font-size: 26px; }
+
+/* Filter pills */
+.proj-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Theme sections */
+.proj-theme-header { margin-bottom: 32px; }
+.proj-theme-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-top: 8px; }
+.proj-theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
+/* Standard project card */
+.proj-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px;
+  display: flex; flex-direction: column;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.proj-card:hover { box-shadow: 0 3px 16px rgba(0,0,0,0.06); border-color: var(--border-dark); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .proj-featured-grid { grid-template-columns: 1fr; }
+  .proj-featured-card:first-child { grid-column: auto; }
+  .proj-theme-grid { grid-template-columns: 1fr; }
+}
+
+/* Legacy compat — keep for home page project cards if used */
+.projects-full { max-width: var(--max-w); margin: 0 auto; padding: 64px 32px; }
+.projects-full-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.project-full-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 10px;
+  padding: 32px; transition: box-shadow 0.2s;
 }
 .project-full-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.07); }
-.project-full-card.featured {
-  grid-column: 1 / -1;
-  background: var(--bg-dark);
-}
+.project-full-card.featured { grid-column: 1 / -1; background: var(--bg-dark); }
 .project-full-card.featured .project-card-title,
 .project-full-card.featured .project-card-desc { color: rgba(248,247,244,0.85); }
 .project-full-card.featured .project-card-org { color: rgba(216,195,165,0.9); }
@@ -1035,96 +1090,228 @@ footer {
 <!-- ═══════════ PROJECTS ═══════════ -->
 <div id="page-projects" class="page">
 
+  <!-- Hero -->
   <div class="page-hero" style="background: var(--bg-alt);">
     <div class="page-hero-inner">
-      <div class="section-eyebrow">Policy Work</div>
-      <h1 class="section-heading">Projects</h1>
-      <p class="section-sub">Selected policy work across government, multilateral development, and research — presented as case studies rather than bullet points.</p>
+      <div class="section-eyebrow">Portfolio</div>
+      <h1 class="section-heading">Selected Work</h1>
+      <p class="section-sub">A selection of work across public policy, institutional reform, research, and applied problem-solving in education, skills, and governance.</p>
     </div>
   </div>
 
-  <div class="projects-full">
-    <div class="projects-full-grid">
+  <!-- Featured Work -->
+  <div class="proj-section proj-featured-section">
+    <div class="proj-section-inner">
+      <div class="section-eyebrow">Highlights</div>
+      <h2 class="section-heading" style="margin-bottom:40px;">Featured Work</h2>
+      <div class="proj-featured-grid">
 
-      <div class="project-full-card featured">
-        <div class="project-card-meta"><span class="tag">Skills Policy</span><span class="project-card-year">2025</span></div>
-        <h3 class="project-card-title" style="font-size:28px; margin-bottom:8px;">Rural Prosperity & Resilience Programme — Skills Architecture</h3>
-        <div class="project-card-org">World Bank / Ministry of Rural Development, India</div>
-        <p class="project-card-desc" style="margin-bottom:0;">A three-part analytical series for India's MoRD under the World Bank's RPRP mandate: sector identification using FutureSkills Prime; international skill mapping for 14 priority destination economies; and a diagnostic of India's RPL system with domestic and international portability recommendations.</p>
+        <div class="proj-featured-card">
+          <div class="proj-featured-card-inner" style="background: var(--bg-dark); color: rgba(248,247,244,0.85);">
+            <div class="proj-card-top">
+              <span class="proj-card-org-line" style="color: rgba(216,195,165,0.9);">World Bank / Ministry of Rural Development, India</span>
+              <span class="proj-card-year-pill" style="color: rgba(248,247,244,0.4); border-color: rgba(255,255,255,0.12);">2025</span>
+            </div>
+            <h3 class="proj-card-title" style="color: rgba(248,247,244,0.92);">Rural Prosperity & Resilience Programme: Skills Architecture</h3>
+            <p class="proj-card-what">A three-part analytical series covering sector identification, international skill mapping across 14 economies, and a diagnostic of India's Recognition of Prior Learning system with portability recommendations.</p>
+            <p class="proj-card-why" style="color: rgba(216,195,165,0.8); border-color: rgba(255,255,255,0.1);">Shaped the skills and livelihoods architecture for the World Bank's rural prosperity programme in India.</p>
+            <div class="proj-card-tags">
+              <span class="tag" style="background: rgba(255,255,255,0.08); color: rgba(248,247,244,0.6); border-color: rgba(255,255,255,0.12);">Skills Policy</span>
+              <span class="tag" style="background: rgba(255,255,255,0.08); color: rgba(248,247,244,0.6); border-color: rgba(255,255,255,0.12);">Policy & Advisory</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-featured-card">
+          <div class="proj-featured-card-inner">
+            <div class="proj-card-top">
+              <span class="proj-card-org-line">World Bank Group</span>
+              <span class="proj-card-year-pill">2023-26</span>
+            </div>
+            <h3 class="proj-card-title">Skill India Mission Operation: Implementation Completion Report</h3>
+            <p class="proj-card-what">Co-authored the World Bank ICR for a $250M federal skilling initiative covering approximately 10 million beneficiaries. Translated field evidence and outcome data into operational and policy recommendations.</p>
+            <p class="proj-card-role">Role: Co-author of the published World Bank Implementation Completion Report.</p>
+            <p class="proj-card-why">The published ICR directly informed the design of successor national skilling investments in India.</p>
+            <div class="proj-card-tags">
+              <span class="tag accent">Research & Evaluation</span>
+              <span class="tag">Skills</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-featured-card">
+          <div class="proj-featured-card-inner">
+            <div class="proj-card-top">
+              <span class="proj-card-org-line">World Bank / MSDE, India</span>
+              <span class="proj-card-year-pill">2024-25</span>
+            </div>
+            <h3 class="proj-card-title">ITI Modernisation Programme Design</h3>
+            <p class="proj-card-what">Contributed to the KPI/DLI framework, governance architecture, and costed reform scenarios for a $3.6B programme to modernise approximately 1,000 Industrial Training Institutes across India.</p>
+            <p class="proj-card-why">Helped structure one of the largest vocational education reform programmes in the world by value.</p>
+            <div class="proj-card-tags">
+              <span class="tag accent">Program Design</span>
+              <span class="tag">Governance</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-featured-card">
+          <div class="proj-featured-card-inner">
+            <div class="proj-card-top">
+              <span class="proj-card-org-line">Government of National Capital Territory of Delhi</span>
+              <span class="proj-card-year-pill">2021-23</span>
+            </div>
+            <h3 class="proj-card-title">Delhi Education Reform and DSEU Launch</h3>
+            <p class="proj-card-what">As Chief of Staff to the Education Minister, oversaw programme design, execution, and performance monitoring across 1,000 public schools serving 1.8 million students. Co-led the institutional design and launch of Delhi Skills and Entrepreneurship University with 35 programmes and approximately 10,000 students.</p>
+            <p class="proj-card-why">One of the largest state-level education reform operations in India, combining school system management with the creation of a new public university.</p>
+            <div class="proj-card-tags">
+              <span class="tag accent">Education Reform</span>
+              <span class="tag">Program Design</span>
+            </div>
+          </div>
+        </div>
+
       </div>
+    </div>
+  </div>
 
-      <div class="project-full-card">
-        <div class="project-card-meta"><span class="tag accent">Skills Evaluation</span><span class="project-card-year">2023–26</span></div>
-        <h3 class="project-card-title">Skill India Mission Operation — Implementation Completion Report</h3>
-        <div class="project-card-org">World Bank Group</div>
-        <div class="project-meta-row">
-          <div class="project-meta-item"><strong>Scale:</strong> ~10M beneficiaries</div>
-          <div class="project-meta-item"><strong>Value:</strong> $250M</div>
-        </div>
-        <div class="project-section-block">
-          <div class="project-section-label">Role</div>
-          <div class="project-section-text">Co-authored the Implementation Completion Report, translating implementation evidence, field insights, and outcome data into operational and policy recommendations.</div>
-        </div>
-        <div class="project-section-block" style="margin-top:14px;">
-          <div class="project-section-label">Output</div>
-          <div class="project-section-text">Published World Bank ICR — informing future programme design for national skilling investments in India.</div>
-        </div>
+  <!-- Filter pills -->
+  <div class="proj-section" style="padding-bottom:0;">
+    <div class="proj-section-inner">
+      <div class="proj-filters">
+        <button class="filter-btn active" onclick="filterProjects('all', this)">All</button>
+        <button class="filter-btn" onclick="filterProjects('policy', this)">Policy & Advisory</button>
+        <button class="filter-btn" onclick="filterProjects('program', this)">Program Design & Implementation</button>
+        <button class="filter-btn" onclick="filterProjects('research', this)">Research & Evaluation</button>
+        <button class="filter-btn" onclick="filterProjects('reports', this)">Reports & Concept Notes</button>
       </div>
+    </div>
+  </div>
 
-      <div class="project-full-card">
-        <div class="project-card-meta"><span class="tag accent">Governance</span><span class="project-card-year">2024–25</span></div>
-        <h3 class="project-card-title">ITI Modernisation Programme Design</h3>
-        <div class="project-card-org">World Bank / MSDE, India</div>
-        <div class="project-meta-row">
-          <div class="project-meta-item"><strong>Scale:</strong> ~1,000 ITIs</div>
-          <div class="project-meta-item"><strong>Value:</strong> $3.6B</div>
-        </div>
-        <div class="project-section-block">
-          <div class="project-section-label">Contribution</div>
-          <div class="project-section-text">Contributed to KPI/DLI framework, governance architecture, and costed reform scenarios to strengthen institutional performance, accountability, and employment outcomes.</div>
-        </div>
+  <!-- A. Policy & Advisory -->
+  <div class="proj-section proj-theme-section" data-projsection="policy">
+    <div class="proj-section-inner">
+      <div class="proj-theme-header">
+        <div class="section-eyebrow">Policy & Advisory</div>
+        <p class="proj-theme-desc">Strategy, advisory outputs, and analytical work tied directly to policy decisions.</p>
       </div>
+      <div class="proj-theme-grid">
 
-      <div class="project-full-card">
-        <div class="project-card-meta"><span class="tag accent">Education Reform</span><span class="project-card-year">2021–23</span></div>
-        <h3 class="project-card-title">Delhi Education Reform & DSEU Launch</h3>
-        <div class="project-card-org">Government of National Capital Territory of Delhi</div>
-        <div class="project-meta-row">
-          <div class="project-meta-item"><strong>Scale:</strong> 1,000 schools</div>
-          <div class="project-meta-item"><strong>Students:</strong> 1.8M</div>
+        <div class="proj-card" data-projcat="policy">
+          <div class="proj-card-top">
+            <span class="proj-card-org-line">World Bank / Ministry of Rural Development, India</span>
+            <span class="proj-card-year-pill">2025</span>
+          </div>
+          <h3 class="proj-card-title">RPRP Skills Architecture: Sector Identification, International Mapping, and RPL Diagnostic</h3>
+          <p class="proj-card-what">Three policy notes for the Rural Prosperity and Resilience Programme. Identified emerging employment sectors using FutureSkills Prime data, mapped skill demand across 14 priority destination economies, and assessed the portability of India's RPL system with reform recommendations.</p>
+          <div class="proj-card-tags"><span class="tag">Skills Policy</span><span class="tag accent">Policy Note</span></div>
         </div>
-        <div class="project-section-block">
-          <div class="project-section-label">Role</div>
-          <div class="project-section-text">Chief of Staff to the Education Minister. Oversaw programme design, execution, and performance monitoring across school education and higher education reform. Co-led the launch of Delhi Skills and Entrepreneurship University — 35 programmes, ~10,000 students.</div>
+
+        <div class="proj-card" data-projcat="policy">
+          <div class="proj-card-top">
+            <span class="proj-card-org-line">World Bank / MSDE, India</span>
+            <span class="proj-card-year-pill">2024-25</span>
+          </div>
+          <h3 class="proj-card-title">ITI Modernisation: Governance Architecture and Reform Scenarios</h3>
+          <p class="proj-card-what">Contributed to the KPI/DLI framework, governance design, and costed reform scenarios for a $3.6B programme targeting approximately 1,000 Industrial Training Institutes across India.</p>
+          <div class="proj-card-tags"><span class="tag">Governance</span><span class="tag accent">Program Design</span></div>
         </div>
+
       </div>
+    </div>
+  </div>
 
-      <div class="project-full-card">
-        <div class="project-card-meta"><span class="tag accent">FLN Research</span><span class="project-card-year">2025</span></div>
-        <h3 class="project-card-title">State of the Nation: FLN in India — Seven-State Market Study</h3>
-        <div class="project-card-org">Ahvaan Education Trust</div>
-        <div class="project-meta-row">
-          <div class="project-meta-item"><strong>States:</strong> AP, Gujarat, Haryana, MP, Punjab, Rajasthan, UP</div>
-        </div>
-        <div class="project-section-block">
-          <div class="project-section-label">Deliverables</div>
-          <div class="project-section-text">Market feasibility report, competitor map, policy landscape analysis, demand sizing, and a three-year commercial blueprint and board-ready entry strategy for Ahvaan's national FLN rollout.</div>
-        </div>
+  <!-- B. Program Design & Implementation -->
+  <div class="proj-section proj-theme-section" style="background: var(--bg-alt);" data-projsection="program">
+    <div class="proj-section-inner">
+      <div class="proj-theme-header">
+        <div class="section-eyebrow">Program Design & Implementation</div>
+        <p class="proj-theme-desc">Initiative design, institutional reform, and operational execution at scale.</p>
       </div>
+      <div class="proj-theme-grid">
 
-      <div class="project-full-card">
-        <div class="project-card-meta"><span class="tag accent">ECCE / Workforce</span><span class="project-card-year">2024–25</span></div>
-        <h3 class="project-card-title">Childcare Workforce Survey — Madhya Pradesh</h3>
-        <div class="project-card-org">World Bank Group</div>
-        <div class="project-meta-row">
-          <div class="project-meta-item"><strong>Sample:</strong> n = 1,000</div>
+        <div class="proj-card" data-projcat="program">
+          <div class="proj-card-top">
+            <span class="proj-card-org-line">Government of National Capital Territory of Delhi</span>
+            <span class="proj-card-year-pill">2021-23</span>
+          </div>
+          <h3 class="proj-card-title">Delhi Education Reform and DSEU Launch</h3>
+          <p class="proj-card-what">Managed programme design, execution, and performance monitoring across 1,000 public schools and 1.8 million students as Chief of Staff to the Education Minister. Co-led the creation of Delhi Skills and Entrepreneurship University.</p>
+          <p class="proj-card-meta-line"><strong>Scale:</strong> 1,000 schools, 1.8M students, 35 university programmes</p>
+          <div class="proj-card-tags"><span class="tag accent">Education Reform</span><span class="tag">Institutional Design</span></div>
         </div>
-        <div class="project-section-block">
-          <div class="project-section-label">Role</div>
-          <div class="project-section-text">Designed and implemented a state-wide childcare workforce survey; produced policy recommendations to strengthen workforce systems and improve ECCE service delivery outcomes in MP.</div>
+
+        <div class="proj-card" data-projcat="program">
+          <div class="proj-card-top">
+            <span class="proj-card-org-line">World Bank / MSDE, India</span>
+            <span class="proj-card-year-pill">2024-25</span>
+          </div>
+          <h3 class="proj-card-title">ITI Modernisation Programme Design</h3>
+          <p class="proj-card-what">Designed governance structures and costed reform scenarios for modernising India's Industrial Training Institute system under a $3.6B World Bank programme.</p>
+          <p class="proj-card-meta-line"><strong>Scale:</strong> ~1,000 ITIs | <strong>Value:</strong> $3.6B</p>
+          <div class="proj-card-tags"><span class="tag accent">Governance</span><span class="tag">Vocational Education</span></div>
         </div>
+
       </div>
+    </div>
+  </div>
 
+  <!-- C. Research & Evaluation -->
+  <div class="proj-section proj-theme-section" data-projsection="research">
+    <div class="proj-section-inner">
+      <div class="proj-theme-header">
+        <div class="section-eyebrow">Research & Evaluation</div>
+        <p class="proj-theme-desc">Impact evaluations, diagnostics, field research, and analytical work.</p>
+      </div>
+      <div class="proj-theme-grid">
+
+        <div class="proj-card" data-projcat="research">
+          <div class="proj-card-top">
+            <span class="proj-card-org-line">World Bank Group</span>
+            <span class="proj-card-year-pill">2023-26</span>
+          </div>
+          <h3 class="proj-card-title">Skill India Mission Operation: Implementation Completion Report</h3>
+          <p class="proj-card-what">Co-authored the World Bank ICR for a $250M federal skilling initiative. Translated field-level implementation evidence and outcome data into policy recommendations for successor programme design.</p>
+          <p class="proj-card-meta-line"><strong>Scale:</strong> ~10M beneficiaries | <strong>Value:</strong> $250M</p>
+          <div class="proj-card-tags"><span class="tag accent">Skills Evaluation</span><span class="tag">ICR</span></div>
+        </div>
+
+        <div class="proj-card" data-projcat="research">
+          <div class="proj-card-top">
+            <span class="proj-card-org-line">World Bank Group</span>
+            <span class="proj-card-year-pill">2024-25</span>
+          </div>
+          <h3 class="proj-card-title">Childcare Workforce Survey: Madhya Pradesh</h3>
+          <p class="proj-card-what">Designed and implemented a state-wide childcare workforce survey (n=1,000) and produced policy recommendations to strengthen workforce systems and improve early childhood care and education service delivery in Madhya Pradesh.</p>
+          <p class="proj-card-meta-line"><strong>Sample:</strong> n = 1,000</p>
+          <div class="proj-card-tags"><span class="tag accent">ECCE / Workforce</span><span class="tag">Survey Design</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- D. Reports & Concept Notes -->
+  <div class="proj-section proj-theme-section" style="background: var(--bg-alt); border-top: 1px solid var(--border);" data-projsection="reports">
+    <div class="proj-section-inner">
+      <div class="proj-theme-header">
+        <div class="section-eyebrow">Reports & Concept Notes</div>
+        <p class="proj-theme-desc">Feasibility studies, market research, and concept-stage work.</p>
+      </div>
+      <div class="proj-theme-grid">
+
+        <div class="proj-card" data-projcat="reports">
+          <div class="proj-card-top">
+            <span class="proj-card-org-line">Ahvaan Education Trust</span>
+            <span class="proj-card-year-pill">2025</span>
+          </div>
+          <h3 class="proj-card-title">State of the Nation: FLN in India. Seven-State Market Study</h3>
+          <p class="proj-card-what">Produced a market feasibility report, competitor map, policy landscape analysis, demand sizing, and a three-year commercial blueprint with a board-ready entry strategy for a national Foundational Literacy and Numeracy rollout across seven states.</p>
+          <p class="proj-card-meta-line"><strong>States:</strong> AP, Gujarat, Haryana, MP, Punjab, Rajasthan, UP</p>
+          <div class="proj-card-tags"><span class="tag accent">FLN Research</span><span class="tag">Market Study</span></div>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -1585,6 +1772,18 @@ function showPage(id) {
 }
 
 /* ── Writing filter ── */
+function filterProjects(cat, btn) {
+  document.querySelectorAll('.proj-filters .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.proj-theme-section').forEach(section => {
+    if (cat === 'all' || section.dataset.projsection === cat) {
+      section.style.display = '';
+    } else {
+      section.style.display = 'none';
+    }
+  });
+}
+
 function filterWriting(cat, btn) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -1611,7 +1810,8 @@ function initFades() {
   const els = document.querySelectorAll(
     '.page.active .project-card, .page.active .timeline-item, ' +
     '.page.active .topic-card, .page.active .focus-card, ' +
-    '.page.active .writing-card');
+    '.page.active .writing-card, .page.active .proj-featured-card, ' +
+    '.page.active .proj-card');
   els.forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(12px)';
